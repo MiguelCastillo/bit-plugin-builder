@@ -1,0 +1,26 @@
+{
+  "name": "bit-plugin-builder",
+  "version": "0.0.0",
+  "description": "Helper for creating bit-loader plugin configurations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MiguelCastillo/bit-plugin-builder.git"
+  },
+  "keywords": [
+    "bit-loader-plugin"
+  ],
+  "author": "Miguel Castillo <manchagnu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MiguelCastillo/bit-plugin-builder/issues"
+  },
+  "homepage": "https://github.com/MiguelCastillo/bit-plugin-builder",
+  "dependencies": {
+    "belty": "^0.3.0",
+    "dis-isa": "^1.2.2"
+  }
+}
