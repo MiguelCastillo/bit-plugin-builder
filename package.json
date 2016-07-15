@@ -1,6 +1,6 @@
 {
   "name": "bit-plugin-builder",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Helper for creating bit-loader plugin configurations",
   "main": "index.js",
   "scripts": {
