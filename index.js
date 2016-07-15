@@ -1,12 +1,12 @@
 var utils = require("belty");
-var types = require("dis-isa");
 
 
 var defaults = {
   resolve: [],
   fetch: [],
   transform: [],
-  dependency: []
+  dependency: [],
+  precompile: []
 };
 
 
@@ -23,7 +23,7 @@ PluginBuilder.prototype.configure = function(options) {
 
 PluginBuilder.prototype.build = function() {
   return utils.merge({}, this._configuration);
-}
+};
 
 
 PluginBuilder.create = function(options) {
@@ -42,19 +42,26 @@ function configure(pluginConfig, options) {
       var value = options[option];
       return {
         name: option,
-        value: types.isArray(value) ? value : [value]
+        value: utils.toArray(value)
       };
     })
     .forEach(function(config) {
       pluginConfig[config.name] = pluginConfig[config.name].concat(config.value);
     });
 
-  if (options.match) {
-    pluginConfig.match = utils.merge({}, pluginConfig.match, options.match);
+  var matches = options.match || options.matches;
+  if (matches) {
+    pluginConfig.matches = utils.merge({}, pluginConfig.matches, matches);
   }
 
-  if (options.ignore) {
-    pluginConfig.ignore = utils.merge({}, pluginConfig.ignore, options.ignore);
+  var ignores = options.ignore || options.ignores;
+  if (ignores) {
+    pluginConfig.ignores = utils.merge({}, pluginConfig.ignores, ignores);
+  }
+
+  var extensions = options.extensions;
+  if (extensions) {
+    pluginConfig.extensions = utils.toArray(extensions);
   }
 
   return pluginConfig;
