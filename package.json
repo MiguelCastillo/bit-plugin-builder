@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/MiguelCastillo/bit-plugin-builder",
   "dependencies": {
-    "belty": "^4.0.3",
-    "dis-isa": "^1.2.3"
+    "belty": "^4.0.3"
   }
 }
