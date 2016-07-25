@@ -51,12 +51,12 @@ function configure(pluginConfig, options) {
 
   var matches = options.match || options.matches;
   if (matches) {
-    pluginConfig.matches = utils.merge({}, pluginConfig.matches, matches);
+    pluginConfig.matches = configureRule(matches);
   }
 
   var ignores = options.ignore || options.ignores;
   if (ignores) {
-    pluginConfig.ignores = utils.merge({}, pluginConfig.ignores, ignores);
+    pluginConfig.ignores = configureRule(ignores);
   }
 
   var extensions = options.extensions;
@@ -66,6 +66,16 @@ function configure(pluginConfig, options) {
 
   return pluginConfig;
 };
+
+
+function configureRule(rule) {
+  return Object
+    .keys(rule)
+    .reduce(function(result, key) {
+      result[key] = utils.toArray(rule[key]);
+      return result;
+    }, {});
+}
 
 
 module.exports = PluginBuilder;
