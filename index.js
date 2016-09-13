@@ -1,6 +1,6 @@
 var utils = require("belty");
 
-var defaults = {
+var defaultOptions = {
   resolve: [],
   fetch: [],
   transform: [],
@@ -14,31 +14,43 @@ function PluginBuilder(options) {
     return new PluginBuilder(options);
   }
 
-  this._configuration = merge(utils.merge({}, defaults), options);
+  this._defaults = defaultOptions;
+  this._configuration = merge(utils.merge({}, this._defaults), options, this._defaults);
 }
 
-PluginBuilder.prototype.configure = function(options) {
-  merge(this._configuration, options);
-  return this;
+PluginBuilder.create = function(options) {
+  return new PluginBuilder(options);
 };
 
 PluginBuilder.prototype.build = function() {
   return utils.merge({}, this._configuration);
 };
 
-PluginBuilder.prototype.withDefaultProp = function(name) {
-  if (!defaults.hasOwnProperty(name)) {
-    defaults[name] = [];
-  }
+PluginBuilder.prototype.configure = function(options) {
+  merge(this._configuration, options, this._defaults);
+  return this;
+};
+
+PluginBuilder.prototype.withDefaultProperty = function(name, value) {
+  this._defaults[name] = value === (void 0) ? [] : value;
+  return this;
+};
+
+PluginBuilder.prototype.withDefaultProperties = function(props) {
+  Object.keys(props).forEach(function(key) {
+    this.withDefaultProperty(key, props[key]);
+  }.bind(this));
 
   return this;
 };
 
-PluginBuilder.create = function(options) {
-  return new PluginBuilder(options);
-};
+function merge(pluginConfig, options, defaults) {
+  pluginConfig = mergeOptions(pluginConfig, options, defaults);
+  pluginConfig = mergeMatchers(pluginConfig, options);
+  return pluginConfig;
+}
 
-function merge(pluginConfig, options) {
+function mergeOptions(pluginConfig, options, defaults) {
   options = options || {};
 
   var updateKeys = Object
@@ -48,6 +60,11 @@ function merge(pluginConfig, options) {
     });
 
   utils.extend(pluginConfig, mergeState(pluginConfig, utils.pick(options, updateKeys)));
+  return pluginConfig;
+}
+
+function mergeMatchers(pluginConfig, options) {
+  options = options || {};
 
   var matches = options.match || options.matches;
   if (matches) {
@@ -60,7 +77,7 @@ function merge(pluginConfig, options) {
   }
 
   return pluginConfig;
-};
+}
 
 function mergeState(currentState, newState) {
   currentState = currentState || {};
