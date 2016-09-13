@@ -104,4 +104,59 @@ describe("bit-plugin-builder test suite", function() {
       });
     });
   });
+
+  describe("When defining default options", () => {
+    var act, defaults, config, result;
+
+    beforeEach(() => act = () => result = PluginBuilder(config).withDefaultProperties(defaults).build());
+
+    describe("and the configuration is empty", () => {
+      beforeEach(() => {
+        config = null;
+        defaults = {};
+        act();
+      });
+
+      it("then result is an object", () => {
+        expect(result).to.be.an("object");
+      });
+
+      it("then result has default settings", () => {
+        expect(result).to.deep.equal({
+          resolve: [],
+          fetch: [],
+          transform: [],
+          dependency: [],
+          precompile: [],
+          extensions: []
+        });
+      });
+    });
+
+    describe("and the configuration has 'some-name'", () => {
+      beforeEach(() => {
+        config = null;
+        defaults = {
+          "some-name": []
+        };
+        act();
+      });
+
+      it("then result is an object", () => {
+        expect(result).to.be.an("object");
+      });
+
+      it("then result has default settings", () => {
+        expect(result).to.deep.equal({
+          resolve: [],
+          fetch: [],
+          transform: [],
+          dependency: [],
+          precompile: [],
+          extensions: [],
+          "some-name": []
+        });
+      });
+    });
+  });
 });
