@@ -21,6 +21,7 @@ describe("bit-plugin-builder test suite", function() {
         expect(result).to.deep.equal({
           resolve: [],
           fetch: [],
+          pretransform: [],
           transform: [],
           dependency: [],
           precompile: [],
