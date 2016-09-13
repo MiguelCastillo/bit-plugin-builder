@@ -3,6 +3,7 @@ var utils = require("belty");
 var defaults = {
   resolve: [],
   fetch: [],
+  pretransform: [],
   transform: [],
   dependency: [],
   precompile: [],
