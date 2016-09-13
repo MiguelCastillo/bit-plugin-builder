@@ -26,6 +26,14 @@ PluginBuilder.prototype.build = function() {
   return utils.merge({}, this._configuration);
 };
 
+PluginBuilder.prototype.withDefaultProp = function(name) {
+  if (!defaults.hasOwnProperty(name)) {
+    defaults[name] = [];
+  }
+
+  return this;
+};
+
 PluginBuilder.create = function(options) {
   return new PluginBuilder(options);
 };
