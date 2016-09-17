@@ -105,4 +105,68 @@ describe("bit-plugin-builder test suite", function() {
       });
     });
   });
+
+  describe("When the plugin build has consecutive calls to configure", () => {
+    var act, config1, config2, transforms1, transforms2, result;
+
+    beforeEach(() => act = () => result = PluginBuilder.create().configure(config1).configure(config2).build());
+
+    describe("and the first configuration has two transfoms in an array with no second configuration", () => {
+      beforeEach(() => {
+        transforms1 = [ function() {}, function() {} ];
+        config1 = {
+          transform: transforms1
+        };
+
+        config2 = null;
+        act();
+      });
+
+      it("then there are two transforms in the result", () => {
+        expect(result.transform).to.have.lengthOf(2);
+      });
+
+      it("then the result contains two functions", () => {
+        expect(result.transform).to.eql(transforms1);
+      });
+    });
+
+    describe("and the first configuration no first configuration and a second configuration with two transfoms in an array", () => {
+      beforeEach(() => {
+        transforms2 = [ function() {}, function() {} ];
+        config1 = null;
+        config2 = {
+          transform: transforms2
+        };
+
+        act();
+      });
+
+      it("then there are two transforms in the result", () => {
+        expect(result.transform).to.have.lengthOf(2);
+      });
+
+      it("then the result contains two functions", () => {
+        expect(result.transform).to.eql(transforms2);
+      });
+    });
+
+    describe("and the first configuration has two transfoms and the second config with two transforms", () => {
+      beforeEach(() => {
+        config1 = {
+          transform: [ function() {}, function() {} ]
+        };
+
+        config2 = {
+          transform: [ function() {}, function() {} ]
+        };
+
+        act();
+      });
+
+      it("then there are 4 transforms in the result", () => {
+        expect(result.transform).to.have.lengthOf(4);
+      });
+    });
+  });
 });
