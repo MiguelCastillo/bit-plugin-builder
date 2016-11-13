@@ -1,3 +1,19 @@
+# DEPRECATED - This has been moved into bit-loader (bit-bundler and bit-imports) and made available when registering a plugin as a function.
+
+``` javascript
+var bundler = new Bitbundler({
+  loader: {
+    plugins: [
+      function(builder) {
+        return builder.configure({
+          extensions: ["esm"]
+        });
+      }
+    ]
+  }
+});
+```
+
 # bit-plugin-builder
 > Helper for creating bit-loader plugin configurations
 
