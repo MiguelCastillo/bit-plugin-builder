@@ -1,4 +1,4 @@
-# DEPRECATED - This has been moved into bit-loader (bit-bundler and bit-imports) and made available when registering a plugin as a function.
+# DEPRECATED - This has been moved into bit-bundler as well as bit-imports and made available when registering a plugin as a function.
 
 ``` javascript
 var bundler = new Bitbundler({
