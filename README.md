@@ -1,5 +1,7 @@
 # DEPRECATED - This has been moved into bit-bundler as well as bit-imports and made available when registering a plugin as a function.
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/MiguelCastillo/bit-plugin-builder.svg)](https://greenkeeper.io/)
+
 ``` javascript
 var bundler = new Bitbundler({
   loader: {
